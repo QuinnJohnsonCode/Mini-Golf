@@ -21,7 +21,7 @@ public class GolfShooting : MonoBehaviour
         Cursor.visible = false;
         
         // Hit Force Initializers
-        hitForce = minHitForce;
+        hitForce = maxHitForce;
         forceSliderUI.minValue = minHitForce;
         forceSliderUI.maxValue = maxHitForce;
     }
@@ -71,7 +71,7 @@ public class GolfShooting : MonoBehaviour
         rb.AddForce(GetShotDirection() * hitForce);
     }
 
-    bool CheckStationary()
+    public bool CheckStationary()
     {
         if (!Mathf.Approximately(rb.velocity.x, 0) || !Mathf.Approximately(rb.velocity.z, 0) || !Mathf.Approximately(rb.velocity.y, 0)) { return false; }
         return true;
