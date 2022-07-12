@@ -18,22 +18,29 @@ public class CursorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ChangeRotation();
+        
         ChangePosition();
         HideCursor();
+    }
+
+    void FixedUpdate()
+    {
+        ChangeRotation();
     }
 
     void ChangeRotation()
     {
         Vector3 newDirection = Camera.main.transform.forward.normalized;
         newDirection.y = 0f;
-        transform.rotation = Quaternion.LookRotation(newDirection);
+
+        Quaternion lookRotation = Quaternion.LookRotation(newDirection);
+        transform.rotation = lookRotation;
     }
 
     void ChangePosition()
     {
         Vector3 newPosition = ball.transform.position;
-        newPosition.y = ball.transform.position.y - (ball.transform.localScale.y / 2.0f);
+        newPosition.y = ball.transform.position.y - (ball.transform.localScale.y / (ball.transform.localScale.y * 10f));
         transform.position = newPosition;
     }
 

@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class GolfShooting : MonoBehaviour
 {
-    [SerializeField] float minHitForce = 10000f;
-    [SerializeField] float maxHitForce = 50000f;
-    [SerializeField] float changeInHitForce = 1000f;
     [SerializeField] Slider forceSliderUI;
 
     float hitForce = 10000f;
@@ -19,42 +16,18 @@ public class GolfShooting : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        
-        // Hit Force Initializers
-        hitForce = maxHitForce;
-        forceSliderUI.minValue = minHitForce;
-        forceSliderUI.maxValue = maxHitForce;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ProcessChangeInForce();
         ProcessShot();
-    }
-
-    void ProcessChangeInForce()
-    {
-        // Mouse Wheel Up
-        if(Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
-        {
-            forceSliderUI.value = forceSliderUI.value + changeInHitForce;
-            hitForce = forceSliderUI.value;
-        }
-        // Mouse Wheel Down
-        else if(Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
-        {
-            forceSliderUI.value = forceSliderUI.value - changeInHitForce;
-            hitForce = forceSliderUI.value;
-        }
     }
 
     void ProcessShot()
     {
         if (Input.GetMouseButtonDown(0))
-        {
             Shoot();
-        }
     }
 
     Vector3 GetShotDirection()
@@ -75,5 +48,10 @@ public class GolfShooting : MonoBehaviour
     {
         if (!Mathf.Approximately(rb.velocity.x, 0) || !Mathf.Approximately(rb.velocity.z, 0) || !Mathf.Approximately(rb.velocity.y, 0)) { return false; }
         return true;
+    }
+
+    public void setHitForce(float force)
+    {
+        hitForce = force;
     }
 }
