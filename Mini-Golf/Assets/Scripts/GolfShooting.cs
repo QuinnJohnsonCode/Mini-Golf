@@ -6,14 +6,20 @@ using UnityEngine.UI;
 public class GolfShooting : MonoBehaviour
 {
     [SerializeField] Slider forceSliderUI;
+    [SerializeField] float yOutOfBounds = -3;
 
+
+    Vector3 lastShotPosition;
     float hitForce = 10000f;
     Rigidbody rb;
+
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
 
+        lastShotPosition = transform.position;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -22,12 +28,27 @@ public class GolfShooting : MonoBehaviour
     void Update()
     {
         ProcessShot();
+        OutOfBoundsCheck();
     }
 
     void ProcessShot()
     {
         if (Input.GetMouseButtonDown(0))
             Shoot();
+    }
+
+    void OutOfBoundsCheck()
+    {
+        if(transform.position.y <= yOutOfBounds)
+        {
+            ResetBall();
+        }
+    }
+
+    void ResetBall()
+    {
+        rb.velocity = Vector3.zero;
+        transform.position = lastShotPosition;
     }
 
     Vector3 GetShotDirection()
@@ -41,6 +62,7 @@ public class GolfShooting : MonoBehaviour
     {
         // Check if ball's velocity is about 0, if not, return (Stationary Check)
         if (!CheckStationary()) { return; }
+        lastShotPosition = transform.position;
         rb.AddForce(GetShotDirection() * hitForce);
     }
 
