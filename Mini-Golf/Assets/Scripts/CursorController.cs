@@ -40,7 +40,7 @@ public class CursorController : MonoBehaviour
     void ChangePosition()
     {
         Vector3 newPosition = ball.transform.position;
-        newPosition.y = ball.transform.position.y - (ball.transform.localScale.y / (ball.transform.localScale.y * 10f));
+        newPosition.y = ball.transform.position.y - (ball.transform.localScale.y / (ball.transform.localScale.y * 13f));
         transform.position = newPosition;
     }
 
